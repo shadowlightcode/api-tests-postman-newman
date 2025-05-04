@@ -1,0 +1,28 @@
+name: API-TESTS-POSTMAN-NEWMAN
+on: workflow_dispatch
+jobs:
+  test:
+    defaults:
+      run: 
+        working-directory: ./tests
+    name: "Run Api tests"
+    runs-on: ubuntu-latest
+    container:
+      image: postman/newman
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: "v23.6.1"
+    - name: Install Newman
+      run: npm install -g newman
+    - name: Install Newman reporter
+      run: npm install -g newman-reporter-htmlextra
+    - name: run tests
+      run: newman run Restful_Booker_BVT.postman_collection.json -e Production.postman_environment.json
+    - uses: actions/upload-artifact@v4
+      if: ${{ !cancelled() }}
+      with:
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 30
