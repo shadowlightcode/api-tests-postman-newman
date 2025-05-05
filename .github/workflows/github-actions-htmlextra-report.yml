@@ -33,7 +33,7 @@ jobs:
         
    # Run the POSTMAN collection
       - name: Run API Tests
-        run: newman run Restful_Booker_BVT.postman_collection.json -e Production.postman_environment.json -r htmlextra --reporter-htmlextra-export testResults/htmlreport.html || true
+        run: newman run "./tests/Restful_Booker_BVT.postman_collection.json" -e "./tests/Production.postman_environment.json" -r htmlextra --reporter-htmlextra-export testResults/htmlreport.html || true
 
     # Upload the contents of Test Results directory to workspace
       - name: Output the run Details
